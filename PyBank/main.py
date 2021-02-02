@@ -1,15 +1,13 @@
 import os
 import csv
 
-csvpath = os.path.join('PyBank','Resources','budget_data.csv')
+csvpath = os.path.join('.', 'PyBank', 'Resources', 'budget_data.csv')
+with open(csvpath, newline='') as csvfile:
+    csvreader = csv.reader(csvfile, delimiter=',')
 
-with open(csvpath, newline="") as csvfile:
-    csvreader = csv.reader(csvfile, delimiter=",")
-    print(csvreader)
-
-    csv_header = next(csvreader)
-    print(f"CSV Header: {csv_header}")
-
+    csv_header = next(csvreader) 
+    row = next(csvreader)
     for row in csvreader:
-        print(row[1])
+        print(row)
+
 
