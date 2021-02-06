@@ -1,6 +1,8 @@
 import os
 import csv
 
+
+#Thanks to Joseph Yon "Big1bluey" for the references and guidance of his code
 # read the CSV file 
 
 PyBankcsv = os.path.join('PyBank','Resources','budget_data.csv')
