@@ -7,18 +7,18 @@ PyBankcsv = os.path.join('PyBank','Resources','budget_data.csv')
 
 # names to store dataset values
 
-total_months = []
 date = []
-total_monthly_change = []
 profit = []
+month_collect = []
 pl_change = []
-
+net_total_pl = []
+month_count = []
 #Store Values
-counter = 0
-pl_total = 0
-begin_profit = 0
-monthly_change = 0
+total_months = 0
+total_profit = 0
+row_count = -1
 total_pl_change = 0
+
 
 with open(PyBankcsv, newline='') as csvfile:
     csvreader = csv.reader(csvfile, delimiter=',')
@@ -29,33 +29,56 @@ with open(PyBankcsv, newline='') as csvfile:
 
 # Count the total number of months
       date.append(row[0])
-      counter = counter + 1 
+      total_months += 1 
 
 # Calculate the total profit and loss
-      profit.append(row[1])
-      pl_total = pl_total + int(row[1])
-        
-# Calculate the changes in in profit/loss and find the average       
-      pl_change = int(row[1])
-      monthly_change = pl_change - begin_profit
+
+      total_profit += int(row[1])
       
-      total_monthly_change.append(monthly_change)
+# Calculate the monthly changes in in profit/loss      
 
-      total_pl_change = total_pl_change + monthly_change
-      begin_profit = pl_change
+      monthly_change = int(row[1]) - row_count
 
-      pl_average = (total_pl_change/counter)
+      month_collect.append(monthly_change)
+
+      sum_pl = sum(month_collect)
+
+      
+      row_count = int(row[1])
+      
+      month_count.append(row[0])
+
+# find the average     
+      
+      average_change = round(sum_pl)/(total_months) 
+
 
   #Greatest increase in profits (date and amount)    
-      highest_pl = max(total_monthly_change)
-      highest_date = date[total_monthly_change.index(highest_pl)]
+      highest_pl = max(month_collect)
+      highest_date = max(date)
+      lowest_pl = min(month_collect)
+      lowest_date = min(date)
 
-      lowest_pl = min(total_monthly_change) 
-      lowest_date = date[total_monthly_change.index(highest_pl)]
+       
+      
       
 print(f"Financial Analysis")
 print(f"-------------------------------------------")
-print(f"Total Months: " + str(counter))
-print(f"Total Profit/Loss: " + "$" + str(pl_total))
-print(f"Average Change: " + "$" + str(pl_average))
-print(monthly_change)
+print(f"Total Months: " + str(total_months))
+print(f"Total Profit/Loss: " + "$" + str(total_profit))
+print(f"Average Change: " + "$" + str(average_change))
+print(f"Greatest Increase in Profits:, {str(highest_date)}, (${highest_pl})")
+print(f"Greatest Decrease in Profits:, {str(lowest_date)},  (${lowest_pl})")
+
+
+# export the results 
+output_file = os.path.join('PyBank','Resources','budget_data.text')
+with open(output_file, 'w',) as txtfile:
+
+    txtfile.write(f"Financial Analysis")
+    txtfile.write(f"-------------------------------------------")
+    txtfile.write(f"Total Months: " + str(total_months))
+    txtfile.write(f"Total Profit/Loss: " + "$" + str(total_profit))
+    txtfile.write(f"Average Change: " + "$" + str(average_change))
+    txtfile.write(f"Greatest Increase in Profits:, {str(highest_date)}, (${highest_pl})")
+    txtfile.write(f"Greatest Decrease in Profits:, {str(lowest_date)},  (${lowest_pl})")   
