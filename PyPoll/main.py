@@ -10,8 +10,7 @@ with open(csvpath, newline='') as csvfile:
 
 
 # Variables
-    candidate_list = ["Khan", "O'Tooley", "Li", "Correy"]
-    candidate = []
+    candidate = ["Khan", "O'Tooley", "Li", "Correy"]
     percentage = 0
     total_votes = 0
     candidate_vote_counter = Counter
@@ -27,7 +26,7 @@ with open(csvpath, newline='') as csvfile:
         candidate_list = (row[2])
         # step through candidate list
         if candidate in candidate_list
-           candidate_index = candidate.index(candidate)
+           candidate_index = candidate.index(candidate_list)
            candidate_vote_counter[candidate_index] = candidate_vote_counter[candidate_index] + 1
         else
            
@@ -48,9 +47,30 @@ with open(csvpath, newline='') as csvfile:
             vote_tally_index = count
     
     winner = candidate_list[vote_tally_index]
-    
+
+    print(f'Election Results')
+    print(f'-------------------------------------------')
+    print(f'Total Votes: {total_votes}')
+    for count in range(len(candidate_list)):
+        print(f'{candidate_list[count]}: {percentage[count]}% ({candidate_vote_counter[count]}')
+    print(f'-------------------------------------------')
+    print(f'Winner: {winner}')
+    print(f'--------------------------------------------')
 
 
+    # Output files
+
+    output_file = os.path.join('.', 'PyPoll', 'Resources', 'election_data_revised.text')
+
+    with open(output_file, 'w',) as txtfile:
 
 
+        txtfile.write(f'Election Results')
+        txtfile.write(f'-------------------------------------------')
+        txtfile.write(f'Total Votes: {total_votes}')
+          for count in range(len(candidate_list)):
+              txtfile.write(f'{candidate_list[count]}: {percentage[count]}% ({candidate_vote_counter[count]}')
+        txtfile.write(f'-------------------------------------------')
+        txtfile.write(f'Winner: {winner}')
+        txtfile.write(f'--------------------------------------------')
     
