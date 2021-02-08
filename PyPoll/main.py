@@ -1,3 +1,5 @@
+# Special Thanks to Olufunke Olaleye: ofunkey and Joseph Yon: BigBluey for their code examples
+
 import os
 import csv
 
