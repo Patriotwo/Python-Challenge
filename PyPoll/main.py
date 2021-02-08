@@ -32,7 +32,8 @@ with open(csvpath, newline='') as csvfile:
         candidate.append(x)   
         
  # Calculate the total number of votes each candidate won  
- """ This needs to be Total votes / "Khan" votes * 100
+ """ I need eac candidates individual total votes
+ This needs to be Total votes / "Khan" votes * 100
  Total votes / "Correy" votes * 100 
  Total votes / "Li" votes * 100 
  Total votes / "O'Tooley"  * 100"""     
