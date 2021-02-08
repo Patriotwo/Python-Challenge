@@ -9,53 +9,74 @@ with open(csvpath, newline='') as csvfile:
     csv_header = next(csvfile) 
 
 
-# Variables
-    candidate = []
+# Create a list to count the number of voters in voter ID row [0]
+    voter_ID = []
+
+# Create a list for candidate names
     candidate_list = []
-    count = 0
-    percentage = []
+
+# Create a list to count each of the candidate vote
+    Khan_Vote = 0
+    Correy_Vote = 0
+    Li_Vote = 0
+    OTooley_Vote = 0
+    winning_candidate = []
     number_votes = 0
-    candidate_vote_counter = []
-    x = {"Khan", "Correy", "Li", "O'Tooley"}
+    
+    
 
 
 # Why is this action different from PyBank - row = next(csvreader)
     for row in csvreader:
-       
+
+# Count the number of votes
         number_votes += 1
 
 # Return a list of candidate votes      
-        candidate_list.append(row[2])
+        if (row[2]) == ("Khan"):
+            Khan_Vote += 1
+        elif(row[2]) == ("Correy"):
+            Correy_Vote += 1
+        elif(row[2]) == ("Li"):
+            Li_Vote += 1
+        else:
+             OTooley_Vote += 1
 
-        # step through candidate list
-    for x in set(candidate_list):
-        candidate.append(x)   
-        
- # Calculate the total number of votes each candidate won  
- """ I need eac candidates individual total votes
- This needs to be Total votes / "Khan" votes * 100
- Total votes / "Correy" votes * 100 
- Total votes / "Li" votes * 100 
- Total votes / "O'Tooley"  * 100"""     
-        y = candidate_list.count(x)
-        candidate_vote_counter.append(y)
+                
+ # Calculate the percentage of each candidate votes
+ #I need eac candidates individual total votes
+ #This needs to be Total votes / "Khan" votes * 100
+ #Total votes / "Correy" votes * 100 
+ #Total votes / "Li" votes * 100 
+ #Total votes / "O'Tooley" votes  * 100
+ # take off the *100
+      
+        khan_percent = (Khan_Vote / number_votes)
+        correy_percent = (Correy_Vote / number_votes)
+        li_percent = (Li_Vote / number_votes)
+        otooley_percent = (OTooley_Vote / number_votes)
 
-# Calculate the percentage of the votes for each candidate 
-        z = (y/number_votes)*100
-        percentage.append(z)
-    
-    winning_count = max(candidate_vote_counter)
-    winner = candidate.index(winning_count)
+#Calculte the winner    
+    winner = max(Khan_Vote, Correy_Vote, Li_Vote, OTooley_Vote)
+    if winner == Khan_Vote:
+       winning_candidate = "Khan"
+    elif winner == Correy_Vote:
+        winning_candidate = "Correy"
+    elif winner == Li_Vote:
+        winning_candidate = "Li"
+    else:
+        winning_candidate = "O'Tooley"
 
     print(f'Election Results')
     print(f'-------------------------------------------')
     print(f'Total Votes: {number_votes}')
-    
-    for count in range(len(candidate_list)):
-        print(f'{candidate_list[x]}: {percentage[z]}% ({candidate_vote_counter[y]})')
-        print(f'-------------------------------------------')
-        print(f'Winner: {winner}')
-        print(f'-------------------------------------------')
+    print(f'Khan: {khan_percent:.3%}({Khan_Vote})')
+    print(f'Correy: {correy_percent:.3%}({Khan_Vote})')
+    print(f'Li: {li_percent:.3%}({Li_Vote})')
+    print(f"O'Tooley: {otooley_percent:.3%}({OTooley_Vote})")
+    print(f'-------------------------------------------')
+    print(f'Winner: {winning_candidate}')
+    print(f'-------------------------------------------')
 
 
     # Output files
@@ -69,9 +90,12 @@ with open(csvpath, newline='') as csvfile:
         txtfile.write(f'-------------------------------------------')
         txtfile.write(f'Total Votes: {number_votes}')
     
-    for count in range(len(candidate_list)):
-        txtfile.write(f'{candidate_list[x]}: {percentage[z]}% ({candidate_vote_counter[y]})')
+    
+        txtfile.write(f'Khan: {khan_percent:.3%}({Khan_Vote})')
+        txtfile.write(f'Correy: {correy_percent:.3%}({Correy_Vote})')
+        txtfile.write(f'Li: {li_percent:.3%}({Li_Vote})')
+        txtfile.write(f"O'Tooley: {otooley_percent:.3%}({OTooley_Vote})")
         txtfile.write(f'-------------------------------------------')
-        txtfile.write(f'Winner: {winner}')
+        txtfile.write(f'Winner: {winning_candidate}')
         txtfile.write(f'-------------------------------------------')
     
